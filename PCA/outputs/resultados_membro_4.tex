@@ -1,0 +1,23 @@
+
+\section{Análise de Componentes Principais (PCA)}
+\label{sec:pca}
+Para mitigar a colinearidade e reduzir a dimensionalidade do espaço vetorial, implementámos a Análise de Componentes Principais do zero. Os dados originais $X_{N \times D}$ foram padronizados para garantir média nula e variância unitária (Z-score). A matriz de covariância amostral $\Sigma$ foi calculada como $\Sigma = \frac{1}{N-1}Z^TZ$, sobre a qual procedemos com a decomposição espetral $\Sigma \mathbf{w} = \lambda \mathbf{w}$.
+
+Os resultados indicam que a primeira componente principal (PC1) retém 27.54\% da variância dos dados, enquanto a PC2 retém 22.67\%. Em conjunto, a projeção bidimensional preserva 50.22\% da variância total original.
+
+Para a inspeção visual, as observações projetadas foram mapeadas de acordo com a sua classe de qualidade. Conforme antecipado pela análise de redundância da Seção \ref{sec:bivariada}, a Fig. \ref{fig:pca}(a) evidencia uma sobreposição massiva das classes de qualidade. A variância maximizada pela PCA não discriminou os vinhos excelentes dos inferiores. 
+
+Ao alterarmos o rótulo visual para o tipo de vinho (Fig. \ref{fig:pca}(b)), o comportamento do algoritmo torna-se claro: a PC1 dedicou-se quase exclusivamente a isolar o vinho tinto do vinho branco. Este resultado corrobora que a bimodalidade estrutural causada pela concatenação dos 	extit{datasets} domina as fronteiras de decisão, provando que classificadores futuros deverão tratar as duas variantes químicas como subespaços distintos.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\columnwidth]{images/pca_by_quality.pdf}
+\centerline{(a) Colorido por Qualidade}
+\vspace{0.4cm}
+
+\includegraphics[width=0.9\columnwidth]{images/pca_by_winetype.pdf}
+\centerline{(b) Colorido por Tipo de Vinho}
+
+\caption{Projeções das observações no subespaço bidimensional formado por PC1 e PC2. A separação que falha em distinguir a qualidade (a) é perfeitamente justificada pela segregação natural dos tipos de vinho (b).}
+\label{fig:pca}
+\end{figure}
