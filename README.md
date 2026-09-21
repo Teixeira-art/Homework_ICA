@@ -207,13 +207,13 @@ e execute o script Python responsável pelas Tarefas 1, 2 e 3 presente nesse dir
 Entre na pasta:
 
 ```bash
-cd "bi-variate analysis"
+cd "bivariado"
 ```
 
 e execute:
 
 ```bash
-python script_geral_4.py
+python bivariado.py
 ```
 
 ### PCA
