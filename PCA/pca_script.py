@@ -4,9 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# ============================================================
-# Tarefa 5 — PCA FROM SCRATCH 
-# ============================================================
 DATA_DIR = Path("dataset")
 OUT_DIR = Path("PCA/outputs")
 FIG_DIR = OUT_DIR / "figures"
@@ -24,9 +21,7 @@ PREDICTORS = [
 FIG_DIR.mkdir(parents=True, exist_ok=True)
 TAB_DIR.mkdir(parents=True, exist_ok=True)
 
-# ------------------------------------------------------------
-# FUNÇÕES DE APOIO
-# ------------------------------------------------------------
+# funções de apoio
 def save_latex_table(df, filename, caption, label, first_col_name="Preditor"):
     """Exporta DataFrame para formato LaTeX (IEEEtran compatível)."""
     cols = [str(c) for c in df.columns]
@@ -51,9 +46,7 @@ def save_latex_table(df, filename, caption, label, first_col_name="Preditor"):
     lines += [r"\hline", r"\end{tabular}%", "}", r"\end{table}", ""]
     (TAB_DIR / filename).write_text("\n".join(lines), encoding="utf-8")
 
-# ------------------------------------------------------------
-# 1. LEITURA COM METADADOS
-# ------------------------------------------------------------
+# leitura dos arquivos csv
 red = pd.read_csv(RED_FILE, sep=";")
 white = pd.read_csv(WHITE_FILE, sep=";")
 red['wine_type'] = 'Tinto'
@@ -63,9 +56,7 @@ df = pd.concat([red, white], ignore_index=True)
 X = df[PREDICTORS].to_numpy(dtype=float)
 N, D = X.shape
 
-# ------------------------------------------------------------
-# 2. PADRONIZAÇÃO E COVARIÂNCIA (Correção N-1)
-# ------------------------------------------------------------
+# -padronização e covariancia
 mean = X.mean(axis=0)
 std = X.std(axis=0, ddof=1)
 Z = (X - mean) / std
@@ -73,9 +64,7 @@ Z = (X - mean) / std
 # Estimador não enviesado da matriz de covariância
 Sigma = (Z.T @ Z) / (N - 1)
 
-# ------------------------------------------------------------
-# 3. DECOMPOSIÇÃO ESPECTRAL E PROJEÇÃO
-# ------------------------------------------------------------
+# projeção
 eigenvalues, eigenvectors = np.linalg.eigh(Sigma)
 
 # Ordenação decrescente
@@ -83,7 +72,7 @@ order = np.argsort(eigenvalues)[::-1]
 eigenvalues = eigenvalues[order]
 eigenvectors = eigenvectors[:, order]
 
-# Convenção de sinal (para reprodutibilidade)
+# Convenção de sinal
 for j in range(D):
     if eigenvectors[np.argmax(np.abs(eigenvectors[:, j])), j] < 0:
         eigenvectors[:, j] *= -1
@@ -98,14 +87,11 @@ df_pca = pd.DataFrame(X_pca, columns=["PC1", "PC2"])
 df_pca['quality'] = df[CLASS_COL].astype('category')
 df_pca['wine_type'] = df['wine_type'].astype('category')
 
-# ------------------------------------------------------------
-# 4. EXPORTAÇÃO NUMÉRICA E TABELAS (CSV e LaTeX)
-# ------------------------------------------------------------
-# Padronização e Covariância
+# Padronização e Covariância das tabelas em csv
 pd.DataFrame({"feature": PREDICTORS, "mean": mean, "std_sample": std}).to_csv(TAB_DIR / "standardization_parameters.csv", index=False)
 pd.DataFrame(Sigma, index=PREDICTORS, columns=PREDICTORS).to_csv(TAB_DIR / "covariance_matrix_standardized.csv")
 
-# Autovalores e Variância Explicada
+# Autovalores e Variância 
 df_eigen = pd.DataFrame({
     "Componente": [f"PC{i+1}" for i in range(D)],
     "Autovalor": eigenvalues,
@@ -134,13 +120,10 @@ for cls in sorted(df[CLASS_COL].unique()):
     })
 pd.DataFrame(rows).to_csv(TAB_DIR / "class_centroids_PC1_PC2.csv", index=False)
 
-# ------------------------------------------------------------
-# 5. PLOTS OTIMIZADOS
-# ------------------------------------------------------------
 pc1_var = explained_ratio[0] * 100
 pc2_var = explained_ratio[1] * 100
 
-# Gráfico 1: Exigência do Professor (Colorido por Qualidade)
+# gráfico colorido por qualidade
 plt.figure(figsize=(7, 5))
 sns.scatterplot(data=df_pca, x="PC1", y="PC2", hue="quality", palette="viridis", s=15, alpha=0.6, edgecolor=None)
 plt.xlabel(f"PC1 ({pc1_var:.2f}% da variância)")
@@ -151,7 +134,7 @@ plt.grid(alpha=0.2)
 plt.savefig(FIG_DIR / "pca_by_quality.pdf", bbox_inches="tight")
 plt.close()
 
-# Gráfico 2: Descoberta Académica (Colorido por Tipo de Vinho)
+# gráfico com cores por tipo de vinho
 plt.figure(figsize=(7, 5))
 sns.scatterplot(data=df_pca, x="PC1", y="PC2", hue="wine_type", palette="Set1", s=15, alpha=0.6, edgecolor=None)
 plt.xlabel(f"PC1 ({pc1_var:.2f}% da variância)")
