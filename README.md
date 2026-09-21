@@ -237,8 +237,9 @@ Os resultados completos são mantidos no repositório. O artigo apresenta apenas
 ## Contribuições
 
 - Lucas Martins e Lucas Teixeira — Tarefas 1, 2 e 3: descrição do dataset e análises monovariadas incondicional e condicionada às classes
-- João Victor Falcão — Tarefa 4: análise bivariada, cálculo da correlação de Pearson, heatmaps e scatter plots
+- João Victor Falcão e Lucas Martins — Tarefa 4: análise bivariada, cálculo da correlação de Pearson, heatmaps e scatter plots
 - João Victor de Abreu — Tarefa 5: implementação do PCA, cálculo das componentes principais e análise dos resultados
+- Todos — Confecção do documento final.
 
 Todos os integrantes participaram da interpretação dos resultados, organização do trabalho e revisão do artigo.
 
