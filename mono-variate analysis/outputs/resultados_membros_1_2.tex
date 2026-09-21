@@ -1,7 +1,0 @@
-
-\subsection{Análise Monovariada e Efeitos de Agregação}
-O dataset consolidado é composto por $N=6497$ observações, descritas por $D=11$ atributos físico-químicos contínuos. As instâncias são categorizadas em $L=7$ classes de qualidade ($q \in \{3, 4, 5, 6, 7, 8, 9\}$). Observamos um desbalanceamento severo: as classes 5 e 6 detêm a esmagadora maioria das instâncias, enquanto as classes extremas possuem representatividade irrisória (ex: $q=9$ conta com apenas 5 observações). 
-
-A análise incondicional das $N$ amostras revelou inflações na variância ($\sigma_d$) e distorções na assimetria ($\gamma_d$) de atributos como \textit{total sulfur dioxide} e \textit{volatile acidity}. A inspeção visual dos histogramas confirmou que este fenômeno decorre da natureza bimodal dos dados concatenados, onde as subpopulações de vinho tinto e branco possuem centros de massa físico-químicos distintos. Este efeito de agregação justifica a necessidade de segmentação ou de transformações de projeção multivariada nas etapas subsequentes.
-
-Ao condicionarmos as estatísticas à variável resposta, as matrizes de $D \times L$ evidenciaram que, apesar de flutuações na tendência central ($\mu_{d|l}$), a dispersão intrínseca de cada qualidade gera forte sobreposição das fronteiras nos box-plots. Constata-se que nenhum preditor é capaz de garantir separabilidade linear unidimensional perfeita entre os níveis de qualidade.
