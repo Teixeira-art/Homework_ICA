@@ -5,15 +5,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# ============================================================
-# CONFIGURAÇÃO DE DIRETÓRIOS E VARIÁVEIS
-# ============================================================
+# diretórios e variáveis utilziados
 DATA_DIR = Path("dataset")
 OUT_DIR = Path("mono-variate analysis/outputs")
 FIG_DIR = OUT_DIR / "figures"
 TAB_DIR = OUT_DIR / "tables"
 
-# Estrutura de pastas para as tarefas 2 e 3
 for folder in [
     FIG_DIR / "unconditional" / "histograms",
     FIG_DIR / "unconditional" / "boxplots",
@@ -30,9 +27,7 @@ PREDICTORS = [
     "pH", "sulphates", "alcohol"
 ]
 
-# ============================================================
-# FUNÇÕES MATEMÁTICAS E DE APOIO
-# ============================================================
+# funções de apoio
 def download_if_missing(filename, url):
     path = DATA_DIR / filename
     if not path.exists():
@@ -77,9 +72,7 @@ def save_latex_table(df, filename, caption, label, first_col_name="Atributo"):
     lines += [r"\hline", r"\end{tabular}%", r"}", r"\end{table*}", ""]
     (TAB_DIR / filename).write_text("\n".join(lines), encoding="utf-8")
 
-# ============================================================
-# TAREFA 1: INGESTÃO E DESCRIÇÃO DO DATASET
-# ============================================================
+# abrir data-set na url e procurar
 red_url = "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv"
 white_url = "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv"
 
@@ -102,9 +95,7 @@ class_counts = df[CLASS_COL].value_counts().sort_index()
 class_dist = pd.DataFrame({"N_l": class_counts, "Percentual (%)": (class_counts / N) * 100})
 save_latex_table(class_dist.T, "class_distribution.tex", "Distribuição das observações entre as classes de qualidade.", "tab:class_dist", first_col_name="Qualidade")
 
-# ============================================================
-# TAREFA 2: ANÁLISE MONOVARIADA INCONDICIONAL
-# ============================================================
+# análise monovariada incondicional
 uncond_stats = pd.DataFrame(index=PREDICTORS, columns=["Média", "Desvio Padrão", "Assimetria"])
 
 for feature in PREDICTORS:
@@ -127,9 +118,7 @@ for feature in PREDICTORS:
 
 save_latex_table(uncond_stats, "unconditional_stats.tex", "Estatísticas monovariadas incondicionais dos preditores.", "tab:uncond_stats")
 
-# ============================================================
-# TAREFA 3: ANÁLISE MONOVARIADA CONDICIONAL
-# ============================================================
+# análise monovariada condicional
 # Vetorização para as estatísticas condicionais usando Pandas GroupBy
 cond_means = df.groupby(CLASS_COL)[PREDICTORS].mean().T
 cond_stds = df.groupby(CLASS_COL)[PREDICTORS].std(ddof=1).T
@@ -167,9 +156,6 @@ for feature in PREDICTORS:
     plt.savefig(FIG_DIR / "conditional" / "boxplots" / f"boxplot_cond_{feature.replace(' ', '_')}.pdf", bbox_inches='tight')
     plt.close()
 
-# ============================================================
-# REDAÇÃO AUTOMATIZADA PARA O ARTIGO (Membros 1 e 2)
-# ============================================================
 tex_report = f"""
 \\subsection{{Análise Monovariada e Efeitos de Agregação}}
 O dataset consolidado é composto por $N={N}$ observações, descritas por $D={D}$ atributos físico-químicos contínuos. As instâncias são categorizadas em $L={L}$ classes de qualidade ($q \\in \\{{3, 4, 5, 6, 7, 8, 9\\}}$). Observamos um desbalanceamento severo: as classes 5 e 6 detêm a esmagadora maioria das instâncias, enquanto as classes extremas possuem representatividade irrisória (ex: $q=9$ conta com apenas {class_counts.get(9, 0)} observações). 
