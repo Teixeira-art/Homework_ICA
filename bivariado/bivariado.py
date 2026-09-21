@@ -5,9 +5,7 @@ import seaborn as sns
 from pathlib import Path
 from itertools import combinations
 
-# ============================================================
-# CONFIGURAÇÃO DE DIRETÓRIOS
-# ============================================================
+# config diretórios
 DATA_DIR = Path("data")
 OUT_DIR = Path("outputs")
 FIG_DIR = OUT_DIR / "figures"
@@ -19,9 +17,7 @@ SCATTER_DIR = FIG_DIR / "scatter_pairs"
 for folder in [FIG_DIR, TAB_DIR, SCATTER_DIR]:
     folder.mkdir(parents=True, exist_ok=True)
 
-# ============================================================
-# 1. INGESTÃO DE DADOS E CORREÇÃO METODOLÓGICA
-# ============================================================
+# leitura de dados e correção 
 def load_and_merge():
 
     red = pd.read_csv(DATA_DIR / "winequality-red.csv", sep=";")
@@ -42,9 +38,7 @@ predictors = [
     if c not in ["quality", "wine_type"]
 ]
 
-# ============================================================
-# 2. CÁLCULO MANUAL DE PEARSON
-# ============================================================
+# Pearson sem func
 def pearson_manual(x, y):
     x_c = x - np.mean(x)
     y_c = y - np.mean(y)
@@ -99,13 +93,10 @@ corr_white.to_csv(
     float_format="%.4f"
 )
 
-# ============================================================
-# 3. OTIMIZAÇÃO VISUAL: HEATMAP TRIANGULAR
-# ============================================================
+# otimização para forma triangular
 def plot_triangular_heatmap(corr_matrix, title, filename):
 
-    # Máscara para esconder a diagonal superior
-    # e evitar informação duplicada
+    # Máscara para esconder a diagonal superior e evitar informação duplicada
     mask = np.triu(
         np.ones_like(corr_matrix, dtype=bool)
     )
@@ -165,9 +156,7 @@ plot_triangular_heatmap(
     "heatmap_white.pdf"
 )
 
-# ============================================================
-# 4. EXTRAÇÃO DAS MAIORES CORRELAÇÕES
-# ============================================================
+# extração das maiores correlações
 upper_pairs = []
 
 for i, fx in enumerate(predictors):
@@ -197,9 +186,7 @@ top_pairs.head(10).to_csv(
     float_format="%.4f"
 )
 
-# ============================================================
-# 5. SCATTER PLOTS DOS 55 PARES DE PREDITORES
-# ============================================================
+# plot dos 55 pares de preditores
 
 # Existem C(11,2) = 55 pares distintos
 pairs = list(combinations(predictors, 2))
@@ -264,12 +251,7 @@ for i, (feature_x, feature_y) in enumerate(
 
     plt.close()
 
-# ============================================================
-# 6. DISPERSÃO FOCADA NAS MAIORES CORRELAÇÕES PARA O ARTIGO
-# ============================================================
-
-# Identificar as variáveis envolvidas nas top 3 maiores correlações
-# para produzir uma figura compacta para o artigo
+# Identificar as variáveis envolvidas nas top 3 maiores correlações para produzir uma figura compacta para o artigo
 top_features = list(
     pd.unique(
         top_pairs
@@ -310,9 +292,7 @@ g.savefig(
 
 plt.close()
 
-# ============================================================
-# FINALIZAÇÃO
-# ============================================================
+# execução//finalização
 
 print("Execução finalizada.")
 print(
