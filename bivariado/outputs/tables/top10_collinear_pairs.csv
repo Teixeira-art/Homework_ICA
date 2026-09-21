@@ -1,0 +1,11 @@
+Preditor_1,Preditor_2,rho,abs_rho
+free sulfur dioxide,total sulfur dioxide,0.7209,0.7209
+density,alcohol,-0.6867,0.6867
+residual sugar,density,0.5525,0.5525
+residual sugar,total sulfur dioxide,0.4955,0.4955
+fixed acidity,density,0.4589,0.4589
+volatile acidity,total sulfur dioxide,-0.4145,0.4145
+residual sugar,free sulfur dioxide,0.4029,0.4029
+chlorides,sulphates,0.3956,0.3956
+volatile acidity,citric acid,-0.3780,0.3780
+volatile acidity,chlorides,0.3771,0.3771
