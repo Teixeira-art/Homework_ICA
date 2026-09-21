@@ -1,4 +1,4 @@
-# Homework 1 — Applied Computational Intelligence
+# Homework 1 — ICA
 
 Trabalho desenvolvido para a disciplina de Inteligência Computacional Aplicada, utilizando o Wine Quality Dataset.
 
