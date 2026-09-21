@@ -50,7 +50,6 @@ Homework_ICA/
 ├── mono-variate analysis/
 │   ├── mono_variate_script.py
 │   └── outputs/
-│       ├── resultados_membros_1_2.tex
 │       ├── figures/
 │       │   ├── unconditional/
 │       │   └── conditional/
@@ -75,7 +74,6 @@ Homework_ICA/
 ├── PCA/
 │   ├── pca_script.py
 │   └── outputs/
-│       ├── resultados_membro_4.tex
 │       ├── figures/
 │       └── tables/
 │
