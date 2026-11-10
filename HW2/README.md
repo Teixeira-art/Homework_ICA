@@ -57,7 +57,7 @@ Os mesmos folds são utilizados nas etapas seguintes, permitindo uma comparaçã
 
 **Principais módulos:** `cv.py`, `ols.py`, `ridge.py` e `run_lineares.py`.
 
-### Parte 3 — PLS e rede neural
+### Parte 3 - PLS e rede neural
 
 **Responsável:** João Victor de Abreu Silva - 568274.
 
@@ -76,7 +76,7 @@ A média das previsões das redes treinadas com diferentes sementes é utilizada
 
 **Principais módulos:** `pls.py`, `mlp.py` e `run_pls_mlp.py`.
 
-### Parte 4 — Testes estatísticos e integração final
+### Parte 4 - Testes estatísticos e integração final
 
 **Responsável:** Lucas Martins Menezes - 565788.
 
